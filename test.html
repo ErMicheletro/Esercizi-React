@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Primi passi con React: Primo componente</title>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="text/babel">
+            const anagrafica = { nome: "Fabio", cognome: "Ansaldi" };
+            const NomePersona = (props) => <h2><small>Nome</small>: {props.valore}</h2>
+            const CognomePersona = (props) => <h2><small>Cognome</small>: {props.valore}</h2>
+            const ProfessionePersona = (props) => <h2><small>Professione</small>: {props.valore}</h2>
+            class Persona extends React.Component {
+                constructor(proprieta) {
+                    super(proprieta);
+                    this.professioneInput = React.createRef();
+                    this.state = { professione: "disoccupato" };
+                    }
+                    handleSubmit(event){
+                        this.setState({professione: this.professioneInput.current.value})
+                        event.preventDefault();
+                    }
+                }
+                render() {
+                    return (
+                        <div className="persona-component">
+                            <NomePersona valore={this.props.data.nome} />
+                            <CognomePersona valore={this.props.data.cognome} />
+                            <ProfessionePersona valore={this.state.professione} />
+                            <hr />
+                            <form name="setta-professione" onSubmit={this.handleSubmit.bind(this)}>
+                                <input name="professione" ref={this.professioneInput} />
+                                <br/>
+                                <button type="submit"></button>
+                            </form>
+                        </div>
+                    )
+                }
+            }
+            ReactDOM.render(<Persona data={anagrafica} />, document.getElementById('root'));
+        </script>
+    </body>
+</html>
